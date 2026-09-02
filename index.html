@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Toras — Selección Argentina de Inline Hockey</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Lora:ital,wght@1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sky:#8FC4EC;
+    --sky-deep:#3E7EB8;
+    --navy-real:#152E56;
+    --ink:#0D2242;
+    --cream:#FFFFFF;
+    --mustard:#DCEBF7;
+    --mustard-deep:#B9D8F0;
+    --max:1120px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--sky);
+    color:var(--cream);
+    font-family:'Inter', sans-serif;
+    overflow-x:hidden;
+  }
+  img{max-width:100%; display:block;}
+
+  h1,h2,h3,.display{
+    font-family:'Archivo Black', sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.005em;
+    line-height:0.95;
+  }
+
+  .wrap{
+    max-width:var(--max);
+    margin:0 auto;
+    padding:0 28px;
+  }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(27,42,85,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid rgba(246,239,224,0.15);
+  }
+  nav .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:14px; padding-bottom:14px;
+  }
+  .brand{
+    display:flex; align-items:center; gap:10px;
+    font-family:'Archivo Black', sans-serif;
+    font-size:1.15rem;
+    letter-spacing:0.03em;
+  }
+  .brand img{height:38px; width:auto;}
+  nav a.cta{
+    background:var(--mustard);
+    color:var(--ink);
+    font-weight:700;
+    padding:10px 20px;
+    border-radius:999px;
+    text-decoration:none;
+    font-size:0.9rem;
+    letter-spacing:0.02em;
+    transition:transform .15s ease, background .15s ease;
+  }
+  nav a.cta:hover{background:var(--cream); transform:translateY(-1px);}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    background:var(--sky);
+    padding:120px 0 84px;
+    overflow:hidden;
+  }
+  .hero-photo{
+    position:absolute; inset:0;
+    background-image:url('remera-portada.jpg');
+    background-size:cover;
+    background-position:center 74%;
+    z-index:0;
+  }
+  .hero-overlay{
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(13,34,66,0.55) 0%, rgba(13,34,66,0.72) 55%, rgba(13,34,66,0.93) 100%);
+    z-index:1;
+  }
+  .sunburst{
+    position:absolute;
+    top:50%; left:50%;
+    width:1400px; height:1400px;
+    transform:translate(-50%,-46%);
+    border-radius:50%;
+    background:repeating-conic-gradient(
+      var(--ink) 0deg 3.5deg,
+      transparent 3.5deg 15deg
+    );
+    -webkit-mask-image:radial-gradient(circle, transparent 0%, transparent 18%, black 30%, black 62%, transparent 74%);
+    mask-image:radial-gradient(circle, transparent 0%, transparent 18%, black 30%, black 62%, transparent 74%);
+    opacity:0.15;
+    animation:spin 140s linear infinite;
+    pointer-events:none;
+  }
+  @keyframes spin{ to{ transform:translate(-50%,-46%) rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce){ .sunburst{animation:none;} }
+
+  .hero-inner{
+    position:relative; z-index:3;
+    display:flex; flex-direction:column; align-items:center;
+    text-align:center;
+  }
+  .eyebrow{
+    font-size:0.78rem;
+    font-weight:700;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:#fff;
+    opacity:0.85;
+    margin-bottom:22px;
+  }
+  .hero img.bull{
+    width:150px;
+    margin-bottom:18px;
+    filter:drop-shadow(0 12px 18px rgba(0,0,0,0.35));
+  }
+  .hero h1{
+    color:var(--sky);
+    font-size:clamp(3.2rem, 11vw, 7.2rem);
+    font-weight:700;
+    -webkit-text-stroke:2px #fff;
+  }
+  .hero h1 span{color:var(--sky); -webkit-text-stroke:2px #fff;}
+  .fine-line{
+    font-family:'Lora', serif;
+    font-style:italic;
+    font-weight:400;
+    font-size:clamp(1.2rem, 2.6vw, 1.65rem);
+    letter-spacing:0.01em;
+    color:#fff;
+    margin-top:14px;
+    opacity:0.96;
+  }
+  .hero p.tagline{
+    max-width:520px;
+    margin:26px auto 0;
+    font-size:1.15rem;
+    line-height:1.5;
+    color:#fff;
+    opacity:0.94;
+    font-weight:500;
+  }
+  .hero .meta{
+    margin-top:30px;
+    font-size:0.82rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:#fff;
+    opacity:0.75;
+  }
+
+  /* ---------- PRODUCT ---------- */
+  .product{
+    background:var(--ink);
+    padding:80px 0;
+  }
+  .product-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:56px;
+    align-items:center;
+  }
+  .product-photo{
+    background:linear-gradient(160deg, var(--navy-real), #0c1226);
+    border-radius:22px;
+    padding:28px;
+    position:relative;
+  }
+  .product-photo img{
+    border-radius:12px;
+    width:100%;
+  }
+  .photo-slider{
+    position:relative;
+    overflow:hidden;
+    border-radius:12px;
+  }
+  .slider-track{
+    display:flex;
+    width:200%;
+    transition:transform .35s ease;
+  }
+  .slide{
+    width:50%;
+    flex-shrink:0;
+  }
+  .slide-guide{
+    background:var(--cream);
+    padding:28px 24px;
+    min-height:100%;
+    box-sizing:border-box;
+    display:flex;
+    flex-direction:column;
+  }
+  .guide-title{
+    font-family:'Archivo Black', sans-serif;
+    text-transform:uppercase;
+    color:var(--ink);
+    font-size:1.1rem;
+    margin-bottom:16px;
+  }
+  .size-table{
+    width:100%;
+    border-collapse:collapse;
+    font-family:'Inter',sans-serif;
+  }
+  .size-table th{
+    background:var(--sky);
+    color:var(--ink);
+    font-size:0.78rem;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    padding:10px 8px;
+    text-align:center;
+  }
+  .size-table th:first-child{border-radius:8px 0 0 0;}
+  .size-table th:last-child{border-radius:0 8px 0 0;}
+  .size-table td{
+    padding:12px 8px;
+    text-align:center;
+    color:var(--ink);
+    border-bottom:1px solid rgba(13,34,66,0.12);
+    font-size:0.95rem;
+  }
+  .size-table td:first-child{font-weight:700;}
+  .guide-note{
+    margin-top:14px;
+    font-size:0.78rem;
+    color:rgba(13,34,66,0.55);
+  }
+  .slider-arrow{
+    position:absolute;
+    bottom:8px;
+    background:rgba(13,34,66,0.5);
+    color:#fff;
+    border:none;
+    width:26px;
+    height:26px;
+    border-radius:50%;
+    font-size:1rem;
+    line-height:1;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .slider-arrow-left{left:8px;}
+  .slider-arrow-right{right:8px;}
+  .slider-arrow:hover{background:rgba(13,34,66,0.8);}
+  .slider-dots{
+    position:absolute;
+    bottom:12px;
+    left:50%;
+    transform:translateX(-50%);
+    display:flex;
+    gap:8px;
+  }
+  .slider-dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.4);
+    border:none;
+    padding:0;
+    cursor:pointer;
+  }
+  .slider-dot.active{background:var(--mustard);}
+  .size-guide-hint{
+    display:block;
+    margin:12px auto 0;
+    background:transparent;
+    border:none;
+    color:var(--sky);
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:0.85rem;
+    cursor:pointer;
+    text-decoration:underline;
+    text-underline-offset:3px;
+  }
+  .size-guide-hint:hover{color:var(--cream);}
+  .badge{
+    position:absolute;
+    top:-14px; right:20px;
+    background:var(--mustard);
+    color:var(--ink);
+    font-family:'Oswald',sans-serif;
+    font-weight:600;
+    text-transform:uppercase;
+    font-size:0.78rem;
+    letter-spacing:0.05em;
+    padding:8px 16px;
+    border-radius:999px;
+    transform:rotate(4deg);
+    box-shadow:0 6px 14px rgba(0,0,0,0.25);
+  }
+  .product-info .eyebrow-small{
+    font-size:0.78rem;
+    font-weight:700;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--sky);
+    margin-bottom:10px;
+  }
+  .product-info h2{
+    font-size:clamp(2.2rem, 4.5vw, 3rem);
+    color:var(--cream);
+    margin-bottom:14px;
+  }
+  .product-info p.desc{
+    color:rgba(246,239,224,0.75);
+    font-size:1rem;
+    line-height:1.6;
+    margin-bottom:8px;
+    max-width:440px;
+  }
+  .join-line{
+    color:var(--sky);
+    font-weight:600;
+    font-size:1rem;
+    margin-bottom:26px;
+  }
+  .price{
+    font-family:'Archivo Black', sans-serif;
+    font-size:2.2rem;
+    color:var(--mustard);
+    margin-bottom:26px;
+  }
+  .price span{
+    font-family:'Inter',sans-serif;
+    font-size:0.9rem;
+    color:rgba(246,239,224,0.55);
+    font-weight:500;
+    margin-left:6px;
+  }
+  fieldset{border:none;}
+  .size-label{
+    font-size:0.78rem;
+    font-weight:700;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:rgba(246,239,224,0.6);
+    margin-bottom:12px;
+    display:block;
+  }
+  .sizes{
+    display:flex; gap:10px;
+    margin-bottom:32px;
+  }
+  .sizes input{
+    position:absolute;
+    opacity:0;
+    pointer-events:none;
+  }
+  .sizes label{
+    width:52px; height:52px;
+    border:2px solid rgba(246,239,224,0.25);
+    border-radius:10px;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Oswald',sans-serif;
+    font-weight:600;
+    color:var(--cream);
+    cursor:pointer;
+    transition:all .15s ease;
+  }
+  .sizes input:checked + label{
+    background:var(--mustard);
+    border-color:var(--mustard);
+    color:var(--ink);
+  }
+  .sizes label:hover{border-color:var(--sky);}
+  .stock-note{
+    margin-top:12px;
+    font-size:0.82rem;
+    color:rgba(246,239,224,0.55);
+  }
+
+  .buy-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    background:var(--mustard);
+    color:var(--ink);
+    font-family:'Oswald',sans-serif;
+    font-weight:600;
+    font-size:1.05rem;
+    text-transform:uppercase;
+    letter-spacing:0.03em;
+    padding:18px 30px;
+    border-radius:999px;
+    border:none;
+    cursor:pointer;
+    text-decoration:none;
+    transition:transform .15s ease, box-shadow .15s ease;
+    box-shadow:0 10px 24px rgba(245,213,99,0.18);
+  }
+  .buy-btn:hover{transform:translateY(-2px); box-shadow:0 14px 28px rgba(245,213,99,0.28);}
+  .buy-btn:disabled{opacity:0.7; cursor:default; transform:none;}
+  .buyer-fields{
+    margin-bottom:22px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .field-label{
+    font-size:0.78rem;
+    font-weight:700;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:rgba(246,239,224,0.6);
+    margin-bottom:6px;
+    display:block;
+  }
+  .field-input{
+    width:100%;
+    max-width:360px;
+    background:rgba(246,239,224,0.06);
+    border:2px solid rgba(246,239,224,0.2);
+    border-radius:10px;
+    padding:12px 14px;
+    color:var(--cream);
+    font-family:'Inter',sans-serif;
+    font-size:0.95rem;
+  }
+  .field-input::placeholder{color:rgba(246,239,224,0.35);}
+  .field-input:focus{outline:none; border-color:var(--sky-deep);}
+  .buy-note{
+    margin-top:14px;
+    font-size:0.82rem;
+    color:rgba(246,239,224,0.5);
+  }
+  .price-unit{
+    font-family:'Inter',sans-serif;
+    font-size:0.9rem;
+    color:rgba(246,239,224,0.55);
+    font-weight:500;
+    text-transform:none;
+    margin-left:2px;
+  }
+  .add-btn{
+    margin-top:14px;
+    margin-bottom:24px;
+    background:transparent;
+    border:2px solid rgba(246,239,224,0.3);
+    color:var(--cream);
+    font-family:'Oswald',sans-serif;
+    font-weight:600;
+    font-size:0.9rem;
+    text-transform:uppercase;
+    letter-spacing:0.03em;
+    padding:10px 20px;
+    border-radius:999px;
+    cursor:pointer;
+    transition:border-color .15s ease;
+  }
+  .add-btn:hover{border-color:var(--sky);}
+  .cart-box{
+    margin-top:22px;
+    margin-bottom:22px;
+    background:rgba(246,239,224,0.06);
+    border-radius:14px;
+    padding:18px 20px;
+  }
+  .cart-list{
+    list-style:none;
+    margin-top:10px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .cart-list li{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    font-size:0.95rem;
+    color:var(--cream);
+    padding:6px 0;
+    border-bottom:1px solid rgba(246,239,224,0.12);
+  }
+  .cart-remove{
+    background:transparent;
+    border:none;
+    color:rgba(246,239,224,0.5);
+    cursor:pointer;
+    font-size:0.9rem;
+    padding:2px 8px;
+  }
+  .cart-remove:hover{color:#ffb4b4;}
+  .cart-total{
+    margin-top:12px;
+    font-family:'Archivo Black', sans-serif;
+    font-size:1.2rem;
+    color:var(--mustard);
+  }
+  .gorra-block{
+    margin-top:36px;
+    padding-top:28px;
+    border-top:1px solid rgba(246,239,224,0.15);
+  }
+  .gorra-title{
+    font-size:1.4rem;
+    color:var(--cream);
+    margin-bottom:10px;
+  }
+  .price-gorra{
+    font-size:1.6rem;
+    margin-bottom:16px;
+  }
+  .gorra-content{
+    display:flex;
+    gap:18px;
+    align-items:center;
+  }
+  .gorra-photo{
+    width:110px;
+    height:110px;
+    object-fit:cover;
+    border-radius:12px;
+    flex-shrink:0;
+    background:var(--navy-real);
+  }
+  @media (max-width: 420px){
+    .gorra-content{flex-direction:column; align-items:flex-start;}
+  }
+
+  /* ---------- MANIFIESTO ---------- */
+  .manifiesto{
+    background:var(--cream);
+    color:var(--ink);
+    padding:90px 0;
+  }
+  .manifiesto-grid{
+    display:grid;
+    grid-template-columns:0.9fr 1.1fr;
+    gap:50px;
+    align-items:start;
+  }
+  .manifiesto h2{
+    font-size:clamp(2.4rem,5vw,3.6rem);
+  }
+  .manifiesto .lead{
+    font-size:1.5rem;
+    line-height:1.35;
+    font-weight:500;
+    color:var(--sky-deep);
+    margin-top:20px;
+  }
+  .manifiesto p{
+    font-size:1.05rem;
+    line-height:1.7;
+    color:rgba(14,23,48,0.78);
+  }
+
+  /* ---------- VALUES ---------- */
+  .values{
+    background:var(--sky);
+    padding:90px 0;
+  }
+  .values h2{
+    color:var(--ink);
+    font-size:clamp(2rem,4.5vw,2.8rem);
+    text-align:center;
+    margin-bottom:50px;
+  }
+  .values-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:22px;
+  }
+  .value-card{
+    background:var(--navy-real);
+    border-radius:18px;
+    padding:30px 24px;
+    min-height:220px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+  }
+  .value-card h3{
+    color:var(--mustard);
+    font-size:1.5rem;
+    margin-bottom:14px;
+  }
+  .value-card p{
+    color:rgba(246,239,224,0.78);
+    font-size:0.94rem;
+    line-height:1.5;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--ink);
+    padding:64px 0 40px;
+    text-align:center;
+  }
+  footer .thanks{
+    font-family:'Archivo Black', sans-serif;
+    font-size:clamp(2.6rem,7vw,4.2rem);
+    color:var(--cream);
+    letter-spacing:0.02em;
+  }
+  footer .sub{
+    margin-top:16px;
+    color:rgba(246,239,224,0.5);
+    font-size:0.85rem;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+  }
+
+  @media (max-width: 860px){
+    .product-grid, .manifiesto-grid{grid-template-columns:1fr;}
+    .values-grid{grid-template-columns:1fr 1fr;}
+    .hero{padding:56px 0 44px;}
+  }
+  @media (max-width: 520px){
+    .values-grid{grid-template-columns:1fr;}
+    .sizes label{width:46px; height:46px;}
+  }
+
+  a:focus-visible, label:focus-within, input:focus-visible{
+    outline:3px solid var(--mustard);
+    outline-offset:2px;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">
+      <img src="logo_transparent.png" alt="Toras – Selección Argentina de Inline Hockey">
+      TORAS
+    </div>
+    <a class="cta" href="#comprar">Comprar remera</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-photo" role="img" aria-label="Selección Argentina de Inline Hockey formada en la cancha durante el himno, con la bandera argentina y el público detrás"></div>
+  <div class="hero-overlay"></div>
+  <div class="wrap hero-inner">
+    <p class="eyebrow">Selección Femenina de Inline Hockey</p>
+    <img class="bull" src="logo_transparent.png" alt="">
+    <h1>LAS TORAS</h1>
+    <p class="fine-line">No existe en el mundo. Existe en nosotras.</p>
+    <p class="meta">World Skate Games · Asunción 2026</p>
+  </div>
+</section>
+
+<section class="product" id="comprar">
+  <div class="wrap product-grid">
+    <div class="product-photo">
+      <span class="badge">Edición Mundial</span>
+      <div class="photo-slider">
+        <div class="slider-track" id="slider-track">
+          <div class="slide">
+            <img src="remera.png" alt="Remera oficial Inline Hockey Argentina, azul marino con el toro y el sol">
+          </div>
+          <div class="slide slide-guide">
+            <p class="guide-title">Guía de talles</p>
+            <table class="size-table">
+              <thead>
+                <tr><th>Talle</th><th>Ancho</th><th>Largo</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>S</td><td>52 cm</td><td>74 cm</td></tr>
+                <tr><td>M</td><td>54 cm</td><td>76 cm</td></tr>
+                <tr><td>L</td><td>57 cm</td><td>79 cm</td></tr>
+                <tr><td>XL</td><td>59 cm</td><td>81,5 cm</td></tr>
+              </tbody>
+            </table>
+            <p class="guide-note">Medidas en cm, prenda extendida.</p>
+          </div>
+        </div>
+        <button class="slider-arrow slider-arrow-left" id="slider-prev" type="button" aria-label="Anterior">‹</button>
+        <button class="slider-arrow slider-arrow-right" id="slider-next" type="button" aria-label="Siguiente">›</button>
+        <div class="slider-dots">
+          <button class="slider-dot active" data-slide="0" aria-label="Ver foto"></button>
+          <button class="slider-dot" data-slide="1" aria-label="Ver guía de talles"></button>
+        </div>
+      </div>
+      <button class="size-guide-hint" id="size-guide-hint" type="button">
+        📏 Ver guía de talles
+      </button>
+    </div>
+    <div class="product-info">
+      <p class="eyebrow-small">Merch oficial</p>
+      <h2>Remera Inline Hockey Argentina</h2>
+      <p class="desc">La remera de la Selección femenina camino a los World Skate Games 2026.</p>
+      <p class="join-line">¡Súmate al equipo de las Toras!</p>
+      <p class="price">$35.000 <span>ARS</span> <span class="price-unit">c/u</span></p>
+
+      <fieldset>
+        <span class="size-label">Elegí un talle y agregalo a tu pedido</span>
+        <div class="sizes">
+          <input type="radio" name="talle" id="talle-s" value="S">
+          <label for="talle-s">S</label>
+
+          <input type="radio" name="talle" id="talle-m" value="M" checked>
+          <label for="talle-m">M</label>
+
+          <input type="radio" name="talle" id="talle-l" value="L">
+          <label for="talle-l">L</label>
+
+          <input type="radio" name="talle" id="talle-xl" value="XL">
+          <label for="talle-xl">XL</label>
+        </div>
+        <button class="add-btn" id="add-remera-btn" type="button">+ Agregar remera</button>
+      </fieldset>
+
+      <div class="gorra-block">
+        <p class="eyebrow-small">Merch oficial</p>
+        <div class="gorra-content">
+          <img class="gorra-photo" src="gorra.jpg" alt="Gorra Toras bordada, Team ARG">
+          <div>
+            <h3 class="gorra-title">Gorra Team ARG</h3>
+            <p class="price price-gorra">$25.000 <span>ARS</span> <span class="price-unit">c/u</span></p>
+            <button class="add-btn" id="add-gorra-btn" type="button">+ Agregar gorra</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="cart-box" id="cart-box" hidden>
+        <span class="size-label">Tu pedido</span>
+        <ul class="cart-list" id="cart-list"></ul>
+        <p class="cart-total">Total: <span id="cart-total">$0</span></p>
+      </div>
+
+      <div class="buyer-fields">
+        <label class="field-label" for="nombre">Nombre y apellido</label>
+        <input class="field-input" type="text" id="nombre" placeholder="Ej: Lionel Andrés Messi" required>
+
+        <label class="field-label" for="whatsapp">WhatsApp (para coordinar la entrega)</label>
+        <input class="field-input" type="tel" id="whatsapp" placeholder="Ej: 11 2345 6789" required>
+      </div>
+
+      <!--
+        PASO PENDIENTE: configurar MP_ACCESS_TOKEN en Netlify (Project configuration >
+        Environment variables) con el Access Token de producción de Mercado Pago.
+        Sin eso, el botón intenta generar el link de pago pero falla.
+      -->
+      <button class="buy-btn" id="confirm-btn" type="button">
+        Confirmar pedido y pagar →
+      </button>
+      <p class="buy-note" id="buy-status">Entrega a coordinar por WhatsApp — no hacemos envíos.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  const sliderTrack = document.getElementById('slider-track');
+  const sliderDots = document.querySelectorAll('.slider-dot');
+  let currentSlide = 0;
+
+  function goToSlide(i){
+    currentSlide = i;
+    sliderTrack.style.transform = `translateX(-${i * 50}%)`;
+    sliderDots.forEach((d, idx) => d.classList.toggle('active', idx === i));
+  }
+
+  document.getElementById('slider-prev').addEventListener('click', () => {
+    goToSlide(currentSlide === 0 ? 1 : 0);
+  });
+  document.getElementById('slider-next').addEventListener('click', () => {
+    goToSlide(currentSlide === 0 ? 1 : 0);
+  });
+  sliderDots.forEach(dot => {
+    dot.addEventListener('click', () => goToSlide(Number(dot.dataset.slide)));
+  });
+  document.getElementById('size-guide-hint').addEventListener('click', () => goToSlide(1));
+</script>
+
+<script>
+  // Estos precios son solo para mostrar el total en pantalla.
+  // El precio real que se cobra lo recalcula la función create-preference.js
+  // del lado del servidor (catálogo fijo) — si cambiás un precio, actualizalo ahí también.
+  const ORDER_LOG_ENDPOINT = "https://script.google.com/macros/s/AKfycbyWM7Zpol1IoFcWloWw9J0hl-bufByRznweJc3fSy2qXkLCBmBaMJV5kvC78Djhg1hX/exec";
+  const CONFIRM_ENDPOINT = "/.netlify/functions/create-preference";
+  const PRECIOS = { remera: 35000, gorra: 25000 };
+  const MAX_ITEMS = 10;
+
+  let cart = []; // [{sku:'remera-M', label:'Remera - Talle M', precio:35000}, {sku:'gorra', label:'Gorra', precio:25000}]
+
+  const cartBox = document.getElementById('cart-box');
+  const cartList = document.getElementById('cart-list');
+  const cartTotalEl = document.getElementById('cart-total');
+  const statusEl = document.getElementById('buy-status');
+
+  function formatARS(n){
+    return "$" + n.toLocaleString('es-AR');
+  }
+
+  function agruparCarrito(){
+    const counts = {};
+    cart.forEach(item => {
+      counts[item.sku] = counts[item.sku] || { label: item.label, precio: item.precio, cantidad: 0 };
+      counts[item.sku].cantidad++;
+    });
+    return counts;
+  }
+
+  function renderCart(){
+    if(cart.length === 0){
+      cartBox.hidden = true;
+      return;
+    }
+    cartBox.hidden = false;
+
+    const counts = agruparCarrito();
+
+    cartList.innerHTML = '';
+    Object.entries(counts).forEach(([sku, info]) => {
+      const li = document.createElement('li');
+      li.innerHTML = `<span>${info.label} × ${info.cantidad}</span>`;
+      const removeBtn = document.createElement('button');
+      removeBtn.type = 'button';
+      removeBtn.className = 'cart-remove';
+      removeBtn.textContent = '✕';
+      removeBtn.addEventListener('click', () => {
+        const idx = cart.map(i => i.sku).lastIndexOf(sku);
+        if(idx > -1) cart.splice(idx, 1);
+        renderCart();
+      });
+      li.appendChild(removeBtn);
+      cartList.appendChild(li);
+    });
+
+    const total = cart.reduce((sum, i) => sum + i.precio, 0);
+    cartTotalEl.textContent = formatARS(total);
+  }
+
+  document.getElementById('add-remera-btn').addEventListener('click', () => {
+    const talle = document.querySelector('input[name="talle"]:checked')?.value;
+    if(cart.length >= MAX_ITEMS){
+      statusEl.textContent = `El máximo por pedido es ${MAX_ITEMS} ítems. Para más, hacé un segundo pedido aparte.`;
+      statusEl.style.color = "#ffb4b4";
+      return;
+    }
+    if(talle){
+      cart.push({ sku: `remera-${talle}`, label: `Remera - Talle ${talle}`, precio: PRECIOS.remera });
+      renderCart();
+    }
+  });
+
+  document.getElementById('add-gorra-btn').addEventListener('click', () => {
+    if(cart.length >= MAX_ITEMS){
+      statusEl.textContent = `El máximo por pedido es ${MAX_ITEMS} ítems. Para más, hacé un segundo pedido aparte.`;
+      statusEl.style.color = "#ffb4b4";
+      return;
+    }
+    cart.push({ sku: 'gorra', label: 'Gorra Team ARG', precio: PRECIOS.gorra });
+    renderCart();
+  });
+
+  document.getElementById('confirm-btn').addEventListener('click', async () => {
+    const nombre = document.getElementById('nombre').value.trim();
+    const whatsapp = document.getElementById('whatsapp').value.trim();
+    const btn = document.getElementById('confirm-btn');
+
+    if(cart.length === 0){
+      statusEl.textContent = "Agregá al menos un producto a tu pedido.";
+      statusEl.style.color = "#ffb4b4";
+      return;
+    }
+    if(!nombre || !whatsapp){
+      statusEl.textContent = "Completá nombre y WhatsApp para continuar.";
+      statusEl.style.color = "#ffb4b4";
+      return;
+    }
+
+    const counts = agruparCarrito();
+    const items = Object.entries(counts).map(([sku, info]) => ({ sku, cantidad: info.cantidad }));
+    const pedidoId = Date.now().toString();
+    const fecha = new Date().toISOString();
+
+    btn.disabled = true;
+    btn.textContent = "Generando pago...";
+    statusEl.textContent = "";
+    statusEl.style.color = "";
+
+    // Guardamos el pedido en la planilla (si falla, no le bloqueamos el pago a la compradora)
+    try{
+      for(const item of items){
+        await fetch(ORDER_LOG_ENDPOINT, {
+          method: "POST",
+          mode: "no-cors",
+          headers: {"Content-Type": "text/plain"},
+          body: JSON.stringify({
+            pedidoId, nombre, whatsapp, fecha,
+            producto: item.sku, cantidad: item.cantidad
+          })
+        });
+      }
+    }catch(err){
+      console.error("No se pudo guardar el pedido:", err);
+    }
+
+    // Generamos el link de pago exacto según el carrito (lo arma el servidor, con precios propios)
+    try{
+      const resp = await fetch(CONFIRM_ENDPOINT, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ items, pedidoId, nombre, whatsapp })
+      });
+      if(!resp.ok) throw new Error("No se pudo generar el link de pago");
+      const data = await resp.json();
+      window.open(data.init_point, "_blank");
+      statusEl.textContent = "¡Listo! Te llevamos a Mercado Pago para completar el pago.";
+    }catch(err){
+      console.error(err);
+      statusEl.textContent = "Hubo un problema generando el pago. Escribinos por WhatsApp para coordinar.";
+      statusEl.style.color = "#ffb4b4";
+    }
+
+    btn.disabled = false;
+    btn.textContent = "Confirmar pedido y pagar →";
+  });
+</script>
+
+<section class="manifiesto">
+  <div class="wrap manifiesto-grid">
+    <div>
+      <h2>Nuestra identidad</h2>
+      <p class="lead">Fuerza sin soberbia. Determinación para avanzar. Energía colectiva. Espíritu femenino de lucha.</p>
+    </div>
+    <div>
+      <p>Somos un equipo que elige competir desde la humildad, sostenerse en la adversidad con resiliencia, avanzar con convicción y transitar el camino con disfrute. La tora representa nuestra fuerza colectiva, nuestra presencia y nuestra manera de ir juntas hacia el objetivo.</p>
+    </div>
+  </div>
+</section>
+
+<section class="values">
+  <div class="wrap">
+    <h2>No somos toras porque nunca nos caemos.<br>Somos toras porque volvemos.</h2>
+    <div class="values-grid">
+      <div class="value-card">
+        <h3>Humildad</h3>
+        <p>Sabemos que siempre hay algo más para aprender. Ninguna llega sola: crecemos cuando hacemos crecer al equipo.</p>
+      </div>
+      <div class="value-card">
+        <h3>Resiliencia</h3>
+        <p>Nos pueden pasar mil cosas, pero siempre encontramos la manera de volver. Nos frustramos, hablamos, aprendemos y volvemos más fuertes.</p>
+      </div>
+      <div class="value-card">
+        <h3>Convicción</h3>
+        <p>Creemos en nosotras, en nuestro juego y en el camino que elegimos. Cuando creemos en lo que hacemos, no hay techo.</p>
+      </div>
+      <div class="value-card">
+        <h3>Disfrute</h3>
+        <p>Elegimos vivir esto desde el amor, la pasión y la entrega. Disfrutamos el camino porque sabemos el privilegio que es estar acá.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="thanks">Gracias</p>
+    <p class="sub">Selección Argentina de Inline Hockey · World Skate Games Asunción 2026</p>
+  </div>
+</footer>
+
+</body>
+</html>
