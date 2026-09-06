@@ -384,10 +384,17 @@
     color:var(--ink);
   }
   .sizes label:hover{border-color:var(--sky);}
+  .sizes input:disabled + label{
+    opacity:0.35;
+    cursor:not-allowed;
+    text-decoration:line-through;
+  }
+  .sizes input:disabled + label:hover{border-color:rgba(246,239,224,0.25);}
   .stock-note{
-    margin-top:12px;
+    margin-top:-24px;
+    margin-bottom:32px;
     font-size:0.82rem;
-    color:rgba(246,239,224,0.55);
+    color:#ffb4b4;
   }
 
   .buy-btn{
@@ -821,12 +828,13 @@
           <input type="radio" name="talle" id="talle-m" value="M" checked>
           <label for="talle-m">M</label>
 
-          <input type="radio" name="talle" id="talle-l" value="L">
+          <input type="radio" name="talle" id="talle-l" value="L" disabled>
           <label for="talle-l">L</label>
 
           <input type="radio" name="talle" id="talle-xl" value="XL">
           <label for="talle-xl">XL</label>
         </div>
+        <p class="stock-note">Talle L: sin stock por el momento.</p>
         <button class="add-btn" id="add-remera-btn" type="button">+ Agregar remera</button>
       </fieldset>
     </div>
@@ -1059,23 +1067,21 @@
     statusEl.textContent = "";
     statusEl.style.color = "";
 
-    // Guardamos el pedido en la planilla (si falla, no le bloqueamos el pago a la compradora)
+    // Guardamos el pedido en la planilla EN PARALELO con el pedido del link de pago
+    // (antes se esperaba fila por fila y recién después se pedía el pago — sumaba varios
+    // segundos. Si el guardado falla, no le bloqueamos el pago a la compradora).
     // "talle" viene S/M/L/XL para remeras, y "Gorra" para la gorra (así se distingue en la columna)
-    try{
-      for(const info of Object.values(counts)){
-        await fetch(ORDER_LOG_ENDPOINT, {
-          method: "POST",
-          mode: "no-cors",
-          headers: {"Content-Type": "text/plain"},
-          body: JSON.stringify({
-            pedidoId, nombre, whatsapp, fecha,
-            talle: info.talle, cantidad: info.cantidad, subtotal: info.cantidad * info.precio
-          })
-        });
-      }
-    }catch(err){
-      console.error("No se pudo guardar el pedido:", err);
-    }
+    Promise.all(
+      Object.values(counts).map(info => fetch(ORDER_LOG_ENDPOINT, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {"Content-Type": "text/plain"},
+        body: JSON.stringify({
+          pedidoId, nombre, whatsapp, fecha,
+          talle: info.talle, cantidad: info.cantidad, subtotal: info.cantidad * info.precio
+        })
+      }))
+    ).catch(err => console.error("No se pudo guardar el pedido:", err));
 
     // Generamos el link de pago exacto según el carrito (lo arma el servidor, con precios propios)
     try{
@@ -1086,8 +1092,11 @@
       });
       if(!resp.ok) throw new Error("No se pudo generar el link de pago");
       const data = await resp.json();
-      window.open(data.init_point, "_blank");
       statusEl.textContent = "¡Listo! Te llevamos a Mercado Pago para completar el pago.";
+      // Navegamos la misma pestaña (en vez de abrir una nueva) para que no lo bloquee
+      // el navegador: un window.open() después de un await ya no cuenta como "gesto
+      // directo del usuario" y Safari/Chrome en varios celulares lo bloquean en silencio.
+      window.location.href = data.init_point;
     }catch(err){
       console.error(err);
       statusEl.textContent = "Hubo un problema generando el pago. Escribinos por WhatsApp para coordinar.";
