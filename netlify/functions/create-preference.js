@@ -12,12 +12,15 @@
 //   1. Acá abajo, en CATALOGO
 //   2. En index.html, en la constante PRECIOS (solo afecta lo que se ve en pantalla)
 
+// STOCK BAJO (20/9): solo queda remera talle S. Gorra y resto de talles,
+// agotados — se sacan del catálogo para que ningún link ni carrito viejo
+// pueda cobrarlos, aunque el front ya los deshabilite.
 const CATALOGO = {
   "remera-S": { title: "Remera Toras - Talle S", unit_price: 35000 },
-  "remera-M": { title: "Remera Toras - Talle M", unit_price: 35000 },
-  "remera-L": { title: "Remera Toras - Talle L", unit_price: 35000 },
-  "remera-XL": { title: "Remera Toras - Talle XL", unit_price: 35000 },
-  "gorra": { title: "Gorra Team ARG", unit_price: 25000 },
+  // "remera-M": agotada
+  // "remera-L": agotada
+  // "remera-XL": agotada
+  // "gorra": agotada
 };
 
 exports.handler = async (event) => {
