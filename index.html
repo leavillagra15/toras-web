@@ -476,6 +476,8 @@
     transition:border-color .15s ease;
   }
   .add-btn:hover{border-color:var(--sky);}
+  .add-btn:disabled{opacity:0.45; cursor:not-allowed;}
+  .add-btn:disabled:hover{border-color:rgba(246,239,224,0.3);}
   .cart-box{
     margin-top:22px;
     margin-bottom:22px;
@@ -822,19 +824,19 @@
       <fieldset>
         <span class="size-label">Elegí un talle y agregalo a tu pedido</span>
         <div class="sizes">
-          <input type="radio" name="talle" id="talle-s" value="S">
+          <input type="radio" name="talle" id="talle-s" value="S" checked>
           <label for="talle-s">S</label>
 
-          <input type="radio" name="talle" id="talle-m" value="M" checked>
+          <input type="radio" name="talle" id="talle-m" value="M" disabled>
           <label for="talle-m">M</label>
 
           <input type="radio" name="talle" id="talle-l" value="L" disabled>
           <label for="talle-l">L</label>
 
-          <input type="radio" name="talle" id="talle-xl" value="XL">
+          <input type="radio" name="talle" id="talle-xl" value="XL" disabled>
           <label for="talle-xl">XL</label>
         </div>
-        <p class="stock-note">Talle L: sin stock por el momento.</p>
+        <p class="stock-note">Solo queda stock de talle S. Resto de talles agotado.</p>
         <button class="add-btn" id="add-remera-btn" type="button">+ Agregar remera</button>
       </fieldset>
     </div>
@@ -849,7 +851,8 @@
       <h2>Gorra Team ARG</h2>
       <p class="desc">Gorra bordada de la Selección, edición Mundial. Talle único, tira ajustable.</p>
       <p class="price">$25.000 <span>ARS</span> <span class="price-unit">c/u</span></p>
-      <button class="add-btn" id="add-gorra-btn" type="button">+ Agregar gorra</button>
+      <p class="stock-note">Sin stock por el momento.</p>
+      <button class="add-btn" id="add-gorra-btn" type="button" disabled>Agotada</button>
     </div>
   </div>
 </section>
